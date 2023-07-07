@@ -2,26 +2,24 @@ package org.example.hero;
 
 import org.example.BaseHero;
 
-/**
- * Каждый из этих классов наследует свойства и методы от 
- * базового класса BaseHero и добавляет свои уникальные 
- * свойства и методы в соответствии с конкретным классом персонажа.
- */
 public class Peasant extends BaseHero {
-    public Peasant(String name, int lv) {
-        super(name, lv);
+    public Peasant(String name) {
+        super(name, 10);
     }
 
-    public Peasant() {
-        super();
+    public void step() {
+        System.out.println("Крестьянин идет...");
     }
-
+    @Override
+    public String getInfo() {
+        return "Я Крестьянин";
+    }
     public void plow() {
-        System.out.println(this.name + " is plowing the field.");
+        System.out.println(this.name + " вспахивает поле.");
     }
 
     public void harvest() {
-        System.out.println(this.name + " is harvesting the crops.");
+        System.out.println(this.name + " собирает урожай.");
     }
 
     @Override

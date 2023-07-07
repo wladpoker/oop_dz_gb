@@ -3,8 +3,16 @@ package org.example.hero;
 import org.example.BaseHero;
 
 public class Warlock extends BaseHero {
-    public Warlock(String name, int hp) {
-        super(name, hp);
+    public Warlock(String name) {
+        super(name, 5);
+    }
+
+    public void step() {
+        System.out.println("Колдун идет...");
+    }
+
+    public String getInfo() {
+        return "Я Колдун";
     }
 
     @Override
@@ -13,10 +21,10 @@ public class Warlock extends BaseHero {
     }
 
     public void curse() {
-        System.out.println(this.name + " is cursing the enemy.");
+        System.out.println(this.name + " проклинает врага.");
     }
 
     public void summonDemon() {
-        System.out.println(this.name + " is summoning a demon.");
+        System.out.println(this.name + " вызывает демона.");
     }
 }
