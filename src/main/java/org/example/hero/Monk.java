@@ -4,7 +4,7 @@ import org.example.BaseHero;
 
 public class Monk extends BaseHero {
     public Monk(String name) {
-        super(name, 9);
+        super(name, 9, 10);
     }
     public void step() {
         System.out.println("Монах идет...");

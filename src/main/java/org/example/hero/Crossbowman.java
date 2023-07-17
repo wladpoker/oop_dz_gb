@@ -1,28 +1,34 @@
 package org.example.hero;
-
 import org.example.BaseHero;
-
 public class Crossbowman extends BaseHero {
+
+
     public Crossbowman(String name) {
-        super(name, 10);
+        super(name, 6);
     }
-    public void step() {
-        System.out.println("Арбалетчик идет...");
-    }
-    @Override
-    public String getInfo() {
-        return "Я Арбалетчик";
-    }
+
     @Override
     public void specialAbility() {
-        throw new UnsupportedOperationException("Unimplemented method 'specialAbility'");
+
     }
 
-    public void reload() {
-        System.out.println(this.name + " перезаряжает свой арбалет.");
+
+    public void step() {
+        System.out.println("Арбалетчик идет...");
+
+        // Поиск ближайшего противника
+        BaseHero closestEnemy = null;
+        double closestDistance = Double.MAX_VALUE;
+        for (BaseHero enemy : getEnemies()) {
+            double distance = Math.sqrt(Math.pow(enemy.getX() - getX(), 2) + Math.pow(enemy.getY() - getY(), 2));
+            if (distance < closestDistance) {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
     }
 
-    public void fire() {
-        System.out.println(this.name + " стреляет из арбалета.");
+    private BaseHero[] getEnemies() {
+        return new BaseHero[0];
     }
 }

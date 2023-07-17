@@ -3,45 +3,55 @@ package org.example;
 import org.example.hero.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 //Мы реально пишем JRPG игру лучше уж сразу в RPG Maker'е делать
 public class Main {
     public static void main(String[] args) {
-        List<BaseHero> heroList = new ArrayList<>();
+        List<BaseHero> heroesList1 = new ArrayList<>();
+        List<BaseHero> heroesList2 = new ArrayList<>();
         Random random = new Random();
 
         for (int i = 0; i < 10; i++) {
-            int heroType = random.nextInt(0,7);
-            switch (heroType) {
+            int heroType1 = random.nextInt(4); // Случайный тип персонажа от 0 до 3
+            int heroType2 = random.nextInt(4) + 4; // Случайный тип персонажа от 4 до 7
+            switch (heroType1) {
                 case 0:
-                    heroList.add(new Peasant("Крестьянин #" + i));
                     break;
                 case 1:
-                    heroList.add(new Rogue("Разбойник #" + i));
+                    heroesList1.add(new Rogue("Разбойник #" + i));
                     break;
                 case 2:
-                    heroList.add(new Sniper("Снайпер #" + i));
+                    heroesList1.add(new Sniper("Снайпер #" + i));
                     break;
                 case 3:
-                    heroList.add(new Warlock("Колдун #" + i));
+                    heroesList1.add(new Warlock("Колдун #" + i));
                     break;
+            }
+            switch (heroType2) {
                 case 4:
-                    heroList.add(new Spearman("Копейщик #" + i));
                     break;
                 case 5:
-                    heroList.add(new Crossbowman("Арбалетчик #" + i));
+                    heroesList2.add(new Spearman("Копейщик #" + i));
                     break;
                 case 6:
-                    heroList.add(new Monk("Монах #" + i));
+                    heroesList2.add(new Crossbowman("Арбалетчик #" + i));
+                    break;
+                case 7:
+                    heroesList2.add(new Monk("Монах #" + i));
                     break;
             }
         }
 
-        for (BaseHero hero : heroList) {
+        List<BaseHero> allHeroes = new ArrayList<>();
+        allHeroes.addAll(heroesList1);
+        allHeroes.addAll(heroesList2);
+        for (BaseHero hero : allHeroes) {
             System.out.println(hero.getInfo());
+        }
+        Peasant farmer = new Peasant("John", 10, 20);
         }
 
 
     }
-}

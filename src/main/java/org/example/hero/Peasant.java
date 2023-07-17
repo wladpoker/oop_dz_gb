@@ -3,8 +3,13 @@ package org.example.hero;
 import org.example.BaseHero;
 
 public class Peasant extends BaseHero {
-    public Peasant(String name) {
-        super(name, 10);
+    public Peasant(String name, int x, int y) {
+        super(name, x, y);
+    }
+    public void move(int deltaX, int deltaY) {
+        System.out.println("Farmer " + getName() + " moves to (" + (coord.getX() + deltaX) + ", " + (coord.getY() + deltaY) + ")");
+        coord.setX(coord.getX() + deltaX);
+        coord.setY(coord.getY() + deltaY);
     }
 
     public void step() {
