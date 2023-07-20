@@ -36,7 +36,6 @@ public class Main {
                     heroesList2.add(new Spearman("Копейщик #" + i));
                     break;
                 case 6:
-                    heroesList2.add(new Crossbowman("Арбалетчик #" + i));
                     break;
                 case 7:
                     heroesList2.add(new Monk("Монах #" + i));
@@ -47,6 +46,9 @@ public class Main {
         List<BaseHero> allHeroes = new ArrayList<>();
         allHeroes.addAll(heroesList1);
         allHeroes.addAll(heroesList2);
+
+
+        // Выводим информацию обо всех персонажах
         for (BaseHero hero : allHeroes) {
             System.out.println(hero.getInfo());
         }
