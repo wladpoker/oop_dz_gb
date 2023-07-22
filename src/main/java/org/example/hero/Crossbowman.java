@@ -2,20 +2,24 @@ package org.example.hero;
 import org.example.BaseHero;
 public class Crossbowman extends BaseHero {
 
+    private int health;
     private int shots;
     private int minDamage;
     private int maxDamage;
 
-    public Crossbowman(String name, int attack, int defense, int shots, int minDamage, int maxDamage, int health,
-            int speed, int delivery, int magic) {
-        super(name, attack, defense, health, speed, delivery, magic);
-        this.shots = shots;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
+
+    @Override
+    public void attack(BaseHero hero) {
+
     }
 
-    public Crossbowman(String name, int health, int speed) {
-        super(name, 6, 3, health, speed, 0, 0);
+    @Override
+    public void move(int deltaX, int deltaY) {
+
+    }
+
+    public Crossbowman(String name) {
+        super(name, 6, 3, 3, 3, 0, 0);
         this.shots = 16;
         this.minDamage = 2;
         this.maxDamage = 3;
@@ -23,7 +27,7 @@ public class Crossbowman extends BaseHero {
 
     @Override
     public void specialAbility() {
-
+        throw new UnsupportedOperationException("Unimplemented method 'specialAbility'");
     }
 
     public int getShots() {
@@ -38,10 +42,8 @@ public class Crossbowman extends BaseHero {
         return maxDamage;
     }
     public void step() {
-        if ((getHealth() == 0) || (shots == 0)) {
-            return;
-        }
-            // Поиск ближайшего противника
+    
+        // Поиск ближайшего противника
         BaseHero closestEnemy = null;
         double closestDistance = Double.MAX_VALUE;
         for (BaseHero enemy : getEnemies()) {
@@ -72,13 +74,11 @@ public class Crossbowman extends BaseHero {
         if (closestFarmer == null) {
             shots--;
         }
-}
+    }
 
     private Peasant[] getPeasant() {
-        return new Peasant[0];
     }
 
     private BaseHero[] getEnemies() {
-        return new BaseHero[0];
     }
 }

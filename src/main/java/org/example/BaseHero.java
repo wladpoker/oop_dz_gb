@@ -14,11 +14,14 @@ public abstract class BaseHero {
     private int health;
     private int speed;
     private int delivery;
-    private int magic;
-    protected String name;
+    protected int magic;
+    private String name;
+    private int maxHealth;
+    private boolean isDead;
+    private String state;
 
-    public BaseHero(String name, int attack, int defense, int health, int speed, int delivery, int magic) {
-        this.name = name;
+    public BaseHero(int i, int i1, int i11, String name, int i3, int i4, int i5, int i6, String s) {
+        this.name = this.name;
         this.attack = 8;
         this.defense = 3;
         this.shots = 0;
@@ -30,9 +33,12 @@ public abstract class BaseHero {
         this.speed = 6;
         this.delivery = 0;
         this.magic = 0;
+        this.isDead = false;
+        this.state = "Stand";
     }
 
-    public BaseHero(String name, int speed) {
+    public BaseHero(String name, int attack, int defense, int shots, int minDamage, int maxDamage, int health,
+                    int speed, int delivery, int magic) {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
@@ -45,11 +51,26 @@ public abstract class BaseHero {
         this.speed = speed;
         this.delivery = delivery;
         this.magic = magic;
+        this.isDead = false;
+        this.state = "Stand";
     }
 
-    protected String getName() {
+    public BaseHero(String name, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+    }
+
+    public BaseHero(String name, int attack, int defense, int health, int speed, int delivery, int magic) {
+    }
+
+    public BaseHero(String name, int i, int i1, int i2, int i3, int i4, int i5, int i6) {
+    }
+
+    public String getName() {
         return name;
     }
+
+    public abstract void attack(BaseHero hero);
+
+    public abstract void move(int deltaX, int deltaY);
 
     private Object getAttack() {
         return attack;
@@ -71,7 +92,7 @@ public abstract class BaseHero {
         return maxDamage;
     }
 
-    public int getHealth() {
+    protected Object getHealth() {
         return health;
     }
 
@@ -80,7 +101,7 @@ public abstract class BaseHero {
     }
 
 
-    private Object getSpeed() {
+    public Object getSpeed() {
         return speed;
     }
 
@@ -92,6 +113,42 @@ public abstract class BaseHero {
         return magic;
     }
 
+    public int getMaxHealth() {
+        return health;
+    }
+
+    public void takeDamage(int damage) {
+        if (!isDead) {
+            health -= damage;
+            if (health <= 0) {
+                isDead = true;
+                state = "Dead";
+            }
+        }
+    }
+
+    public void heal(int amount) {
+        if (!isDead) {
+            health += amount;
+            if (health > 0) {
+                health = getMaxHealth();
+            }
+        }
+    }
+
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getShortDescription() {
         return String.format("Name: %s, Health: %d, Attack: %d, Defense: %d, Damage: %d-%d",
                 this.getName(), this.getHealth(), this.getAttack(), this.getDefense(),
@@ -99,8 +156,8 @@ public abstract class BaseHero {
     }
 
     public String getInfo() {
-        return String.format("Name: %s, Health: %d, Attack: %d, Defense: %d, Damage: %d-%d, Lv: %d, Speed: %d, Delivery: %d", 
-        this.getName(), this.getHealth(), this.getAttack(), this.getDefense(),
+        return String.format("Name: %s, Health: %d, Attack: %d, Defense: %d, Damage: %d-%d, Lv: %d, Speed: %d, Delivery: %d",
+                this.getName(), this.getHealth(), this.getAttack(), this.getDefense(),
                 this.getDamageMin(), this.getDamageMax(), this.getLv(), this.getSpeed(), this.getDelivery());
     }
 
@@ -120,17 +177,14 @@ public abstract class BaseHero {
 
     protected Coord coord;
 
-    public int getX() {
-        return 0;
+    public void step() {
     }
 
-    public int getY() {
-        return 0;
+
+    public void GetDamage(int damage) {
     }
 
-    public int GetDamage(int damage) {
-        return 1;
-    }
+
 
 
     protected static class Coord {
@@ -159,4 +213,3 @@ public abstract class BaseHero {
         }
     }
 }
-

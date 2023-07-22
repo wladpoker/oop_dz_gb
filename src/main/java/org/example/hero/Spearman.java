@@ -3,27 +3,79 @@ package org.example.hero;
 import org.example.BaseHero;
 
 public class Spearman extends BaseHero {
+    private int attack;
+    private int defense;
+    private int shots;
+    private int minDamage;
+    private int maxDamage;
+    private int health;
+    private int speed;
+    private int delivery;
+    private int magic;
     public Spearman(String name) {
-        super(name, 15);
+        super(name);
+        this.attack = 4;
+        this.defense = 5;
+        this.shots = 0;
+        this.minDamage = 1;
+        this.maxDamage = 3;
+        this.health = 10;
+        this.speed = 4;
+        this.delivery = 0;
+        this.magic = 0;
     }
 
-    public void step() {
-        System.out.println("Копейщик идет...");
+    public Spearman(String name, int attack, int defense, int shots, int minDamage, int maxDamage, int health, int speed, int delivery, int magic) {
+        super(name);
+        this.attack = attack;
+        this.defense = defense;
+        this.shots = shots;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
+        this.health = health;
+        this.speed = speed;
+        this.delivery = delivery;
+        this.magic = magic;
     }
 
-    public String getInfo() {
-        return "Я Копейщик";
+    public int getAttack() {
+        return attack;
     }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getShots() {
+        return shots;
+    }
+
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    public Object getHealth() {
+        return health;
+    }
+
+    public Object getSpeed() {
+        return speed;
+    }
+
+    public int getDelivery() {
+        return delivery;
+    }
+
+    public int getMagic() {
+        return magic;
+    }
+
     @Override
     public void specialAbility() {
-        throw new UnsupportedOperationException("Unimplemented method 'specialAbility'");
-    }
 
-    public void brace() {
-        System.out.println(this.name + " упирается своим копьем.");
-    }
-
-    public void thrust() {
-        System.out.println(this.name + " вонзает свое копье.");
     }
 }
