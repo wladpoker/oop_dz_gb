@@ -1,215 +1,77 @@
 package org.example;
-import java.util.Random;
-
-public abstract class BaseHero {
-    protected static int number;
-    protected static Random r;
-    protected int lv;
-    protected int maxLv;
-    private int attack;
-    private int defense;
-    private int shots;
-    private int minDamage;
-    private int maxDamage;
-    private int health;
-    private int speed;
-    private int delivery;
-    protected int magic;
-    private String name;
-    private int maxHealth;
-    private boolean isDead;
-    private String state;
-
-    public BaseHero(int i, int i1, int i11, String name, int i3, int i4, int i5, int i6, String s) {
-        this.name = this.name;
-        this.attack = 8;
-        this.defense = 3;
-        this.shots = 0;
-        this.minDamage = 2;
-        this.maxDamage = 4;
-        this.health = 10;
-        this.lv = 2;
-        this.maxLv = 10;
-        this.speed = 6;
-        this.delivery = 0;
-        this.magic = 0;
-        this.isDead = false;
-        this.state = "Stand";
-    }
-
-    public BaseHero(String name, int attack, int defense, int shots, int minDamage, int maxDamage, int health,
-                    int speed, int delivery, int magic) {
-        this.name = name;
-        this.attack = attack;
-        this.defense = defense;
-        this.shots = shots;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-        this.health = health;
-        this.lv = lv;
-        this.maxLv = lv;
+import org.example.fighte.Character;
+import org.example.gui.Coords;
+import java.util.ArrayList;
+public abstract class BaseHero implements Character {
+    protected final String Name;
+    public final String TYpe;
+    public int maxHealth;
+    protected int speed;
+    protected int arm;
+    protected int attack;
+    public boolean isAlive = true;
+    protected Coords coord;
+    public int Health;
+    public BaseHero(String name, String type, int Health, int speed, int armor, int attack, int x, int y) {
+        Name = name;
+        TYpe = type;
+        this.Health = Health;
+        this.maxHealth = Health;
         this.speed = speed;
-        this.delivery = delivery;
-        this.magic = magic;
-        this.isDead = false;
-        this.state = "Stand";
+        this.arm = armor;
+        this.attack = attack;
+        coord = new Coords(x, y);
     }
-
-    public BaseHero(String name, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+    public String getType() {
+        return TYpe;
     }
-
-    public BaseHero(String name, int attack, int defense, int health, int speed, int delivery, int magic) {
+    public int getHealth() {
+        return Health;
     }
-
-    public BaseHero(String name, int i, int i1, int i2, int i3, int i4, int i5, int i6) {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public abstract void attack(BaseHero hero);
-
-    public abstract void move(int deltaX, int deltaY);
-
-    private Object getAttack() {
-        return attack;
-    }
-
-    private Object getDefense() {
-        return defense;
-    }
-
-    private Object getShots() {
-        return shots;
-    }
-
-    private Object getDamageMin() {
-        return minDamage;
-    }
-
-    private Object getDamageMax() {
-        return maxDamage;
-    }
-
-    protected Object getHealth() {
-        return health;
-    }
-
-    private Object getLv() {
-        return lv;
-    }
-
-
-    public Object getSpeed() {
+    public int getSpeed() {
         return speed;
     }
-
-    private Object getDelivery() {
-        return delivery;
+    public int getArmor() {
+        return arm;
     }
-
-    private Object getMagic() {
-        return magic;
+    public boolean isAlive() {
+        return isAlive;
     }
-
-    public int getMaxHealth() {
-        return health;
+    public Coords getCoord() {
+        return coord;
     }
-
-    public void takeDamage(int damage) {
-        if (!isDead) {
-            health -= damage;
-            if (health <= 0) {
-                isDead = true;
-                state = "Dead";
+    public void getDamage(int damage) {
+        if (Health > damage) {
+            Health = this.Health - damage;
+        } else {
+            Health = 0;
+            isAlive = false;
+        }
+    }
+    @Override
+    public void healing(int addHp) {
+        Health = Math.min(Health + addHp, maxHealth);
+    }
+    @Override
+    public String toString() {
+        return String.format("\t%-12s\t⚔️ %-3d\t\uD83D\uDEE1 %-3d\t♥️%-3d%%", TYpe, attack, arm, (Health * 100 / maxHealth));
+    }
+    @Override
+    public int compare(BaseHero o1, BaseHero o2) {
+        return o1.getSpeed() - o2.getSpeed();
+    }
+    protected BaseHero findTarget(ArrayList<BaseHero> team) {
+        float minDist = 13;
+        int index = 0;
+        for (int i = 0; i < team.size(); i++) {
+            if (team.get(i).isAlive()) {
+                float dist = coord.getDist(team.get(i).coord);
+                if (dist < minDist) {
+                    minDist = dist;
+                    index = i;
+                }
             }
         }
-    }
-
-    public void heal(int amount) {
-        if (!isDead) {
-            health += amount;
-            if (health > 0) {
-                health = getMaxHealth();
-            }
-        }
-    }
-
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getShortDescription() {
-        return String.format("Name: %s, Health: %d, Attack: %d, Defense: %d, Damage: %d-%d",
-                this.getName(), this.getHealth(), this.getAttack(), this.getDefense(),
-                this.getDamageMin(), this.getDamageMax());
-    }
-
-    public String getInfo() {
-        return String.format("Name: %s, Health: %d, Attack: %d, Defense: %d, Damage: %d-%d, Lv: %d, Speed: %d, Delivery: %d",
-                this.getName(), this.getHealth(), this.getAttack(), this.getDefense(),
-                this.getDamageMin(), this.getDamageMax(), this.getLv(), this.getSpeed(), this.getDelivery());
-    }
-
-    public void level(int lv) {
-
-        this.lv = lv + this.lv > this.maxLv ? this.maxLv : lv + this.lv;
-    }
-
-
-    public abstract void specialAbility();
-
-
-    public BaseHero(String name, int x, int y) {
-        this.name = name;
-        this.coord = new Coord(x, y);
-    }
-
-    protected Coord coord;
-
-    public void step() {
-    }
-
-
-    public void GetDamage(int damage) {
-    }
-
-
-
-
-    protected static class Coord {
-        private int x;
-        private int y;
-
-        public Coord(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
+        return team.get(index);
     }
 }
